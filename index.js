@@ -44,7 +44,7 @@ const server = new Hapi.Server(
       plugin: HapiSwagger,
       options: {
         info: {
-          title: "Node.js with Postgres Example - Erick Wendel",
+          title: "Node.js with Postgres Example - Juan Carlos Rodriguez",
           version: "1.0",
       },
       }
