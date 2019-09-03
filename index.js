@@ -19,7 +19,7 @@ const server = new Hapi.Server(
     );
   }
   const sequelize = new Sequelize(
-    `postgres://${process.env.POSTGRES_HOST}/${process.env.POSTGRES_DB || "heroes"}`,
+    `postgres://${process.env.POSTGRES_HOST}/${process.env.POSTGRES_DB || "personas"}`,
     {
       ssl: process.env.POSTGRES_SSL,
       dialectOptions: {
@@ -30,12 +30,12 @@ const server = new Hapi.Server(
   await sequelize.authenticate();
   console.log("postgres is running");
 
-  const Hero = sequelize.define("hero", {
+  const Persona = sequelize.define("persona", {
     name: Sequelize.STRING,
     lastname: Sequelize.STRING,
   });
 
-  await Hero.sync({ force: true });
+  await Persona.sync({ force: true });
 
   await server.register([
     Inert,
@@ -54,26 +54,26 @@ const server = new Hapi.Server(
   server.route([
     {
       method: "GET",
-      path: "/heroes",
+      path: "/personas",
       handler: () => {
-        return Hero.findAll();
+        return Persona.findAll();
       },
       config: {
-        description: "List All heroes",
-        notes: "heroes from database",
+        description: "List All personas",
+        notes: "personas from database",
         tags: ["api"],
       },
     },
     {
       method: "POST",
-      path: "/heroes",
+      path: "/personas",
       config: {
         handler: (req) => {
           const { payload } = req;
-          return Hero.create(payload);
+          return Persona.create(payload);
         },
-        description: "Create a hero",
-        notes: "create a hero",
+        description: "Create a persona",
+        notes: "create a persona",
         tags: ["api"],
         validate: {
           payload: {
@@ -86,13 +86,13 @@ const server = new Hapi.Server(
 
     {
       method: "DELETE",
-      path: "/heroes/{id}",
+      path: "/personas/{id}",
       config: {
         handler: (req) => {
-          return Hero.destroy({ where: { id: req.params.id } });
+          return Persona.destroy({ where: { id: req.params.id } });
         },
-        description: "Delete a hero",
-        notes: "Delete a hero",
+        description: "Delete a persona",
+        notes: "Delete a persona",
         tags: ["api"],
         validate: {
           params: {
