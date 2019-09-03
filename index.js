@@ -32,7 +32,7 @@ const server = new Hapi.Server(
 
   const Hero = sequelize.define("hero", {
     name: Sequelize.STRING,
-    power: Sequelize.STRING,
+    lastname: Sequelize.STRING,
   });
 
   await Hero.sync({ force: true });
@@ -78,7 +78,7 @@ const server = new Hapi.Server(
         validate: {
           payload: {
             name: Joi.string().required(),
-            power: Joi.string().required(),
+            lastname: Joi.string().required(),
           },
         },
       },
