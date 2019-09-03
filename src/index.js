@@ -30,12 +30,12 @@ const server = new Hapi.Server(
   await sequelize.authenticate();
   console.log("postgres is running");
 
-  const Hero = sequelize.define("hero", {
+  const Persona = sequelize.define("persona", {
     name: Sequelize.STRING,
-    power: Sequelize.STRING,
+    apellido: Sequelize.STRING,
   });
 
-  await Hero.sync({ force: true });
+  await Persona.sync({ force: true });
 
   await server.register([
     Inert,
@@ -44,7 +44,7 @@ const server = new Hapi.Server(
       plugin: HapiSwagger,
       options: {
         info: {
-          title: "Node.js with Postgres Example - Erick Wendel",
+          title: "Node.js with Postgres Example - Juan Carlos",
           version: "1.0",
       },
       }
@@ -54,31 +54,31 @@ const server = new Hapi.Server(
   server.route([
     {
       method: "GET",
-      path: "/heroes",
+      path: "/personas",
       handler: () => {
-        return Hero.findAll();
+        return Persona.findAll();
       },
       config: {
-        description: "List All heroes",
-        notes: "heroes from database",
+        description: "List All personas",
+        notes: "personas from database",
         tags: ["api"],
       },
     },
     {
       method: "POST",
-      path: "/heroes",
+      path: "/personas",
       config: {
         handler: (req) => {
           const { payload } = req;
-          return Hero.create(payload);
+          return Persona.create(payload);
         },
-        description: "Create a hero",
-        notes: "create a hero",
+        description: "Create a person",
+        notes: "create a person",
         tags: ["api"],
         validate: {
           payload: {
             name: Joi.string().required(),
-            power: Joi.string().required(),
+            apellido: Joi.string().required(),
           },
         },
       },
@@ -86,13 +86,13 @@ const server = new Hapi.Server(
 
     {
       method: "DELETE",
-      path: "/heroes/{id}",
+      path: "/personas/{id}",
       config: {
         handler: (req) => {
-          return Hero.destroy({ where: { id: req.params.id } });
+          return Persona.destroy({ where: { id: req.params.id } });
         },
-        description: "Delete a hero",
-        notes: "Delete a hero",
+        description: "Delete a person",
+        notes: "Delete a person",
         tags: ["api"],
         validate: {
           params: {

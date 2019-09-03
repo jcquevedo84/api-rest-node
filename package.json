@@ -7,7 +7,7 @@
     "start": "npx pm2-docker index.js"
   },
   "keywords": [],
-  "author": "erickwendel",
+  "author": "jcquevedo84",
   "license": "ISC",
   "dependencies": {
     "hapi": "18.1.0",
